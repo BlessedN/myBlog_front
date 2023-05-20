@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
+import {useNavigate, useLocation} from 'react-router-dom'
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
@@ -13,25 +14,39 @@ export const Home = () => {
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.auth.data);
     const { posts, tags } = useSelector((state) => state.posts);
+    const navigate = useNavigate()
+    const location = useLocation()
+    const [currentTab, setCurrentTab] = useState(location.pathname)
 
-    const isPostLoading = posts.status === 'loading';
-    const isTagsLoading = tags.status === 'loading';
+  const isPostLoading = posts.status === 'loading';
+  const isTagsLoading = tags.status === 'loading';
 
-    React.useEffect(() => { 
-      dispatch(fetchPosts()); 
-      dispatch(fetchTags());
+  const handleChange = (event, newValue) => {  //для tabs
+    setCurrentTab(newValue)
+    navigate(newValue)
+  }
+
+  React.useEffect(() => {
+    dispatch(fetchTags());
+  }, [])
+
+  React.useEffect(() => {
+    if (location.pathname === '/') {
+      dispatch(fetchPosts());
+    } else {
       dispatch(fetchPopularPost()) //дописала
-    }, []);
+    }
+    }, [location]);
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Tab label="Новые" />
-        <Tab label="Популярные" />
+      <Tabs onChange={handleChange}  style={{ marginBottom: 15 }} value={currentTab} aria-label="basic tabs example">
+        <Tab value='/' label="Новые" />
+        <Tab value='/popular/posts' label="Популярные" />
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isPostLoading ? [...Array(5)] : posts.items).map((obj, index) => 
+          {(isPostLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostLoading ? (
             <Post key={index} isLoading={true} />
           ) : (
