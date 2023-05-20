@@ -49,7 +49,7 @@ if(isLoading){
         items={[
           {
             user: {
-              fullName: "Вася Пупкин",
+              fullName: "Вася Иванов",
               avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
             },
             text: "Это тестовый комментарий 555555",
