@@ -25,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/popular/posts" element={<Home />} />     {/* /* дописала *. */}
+        <Route path="/posts/tags/:tag" element={<Home />} />     {/* /* дописала *. */}
        </Routes>
       </Container>
     </>

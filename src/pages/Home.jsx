@@ -4,11 +4,12 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 import {useNavigate, useLocation} from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags, fetchPopularPost } from '../redux/slices/posts';
+import { fetchPosts, fetchTags, fetchPopularPost, fetchPostTags } from '../redux/slices/posts';
 
 export const Home = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export const Home = () => {
 
   const isPostLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+  const { tag } = useParams();
 
   const handleChange = (event, newValue) => {  //для tabs
     setCurrentTab(newValue)
@@ -33,8 +35,11 @@ export const Home = () => {
   React.useEffect(() => {
     if (location.pathname === '/') {
       dispatch(fetchPosts());
-    } else {
+    }  else if(location.pathname === '/popular/posts') {
       dispatch(fetchPopularPost()) //дописала
+    } 
+    else {
+      dispatch(fetchPostTags(tag)) //дописала
     }
     }, [location]);
 
