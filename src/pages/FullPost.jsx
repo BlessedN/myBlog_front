@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Post } from "../components/Post";
 // import { Comment } from "../components/Comment";
 
-import { Index } from "../components/AddComment";
+import { AddComment } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import axios from "../redux/axios";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
@@ -15,7 +15,6 @@ export const FullPost = () => {
   const [isLoading, setLoading] = React.useState(true);
   const { id } = useParams();
 
-  
   React.useEffect(() => {
     axios
     .get(`/posts/${id}`)
@@ -53,7 +52,7 @@ if(isLoading){
         items={data.comments}
         isLoading={false}
       >
-        <Index />
+        <AddComment postId={data._id} />
       </CommentsBlock>
     </>
   );

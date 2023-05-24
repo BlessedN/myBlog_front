@@ -17,11 +17,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                {isLoading ? (
-                  <Skeleton variant="circular" width={40} height={40} />
-                ) : (
-                  <Avatar alt={obj.user.fullName} src={obj.user.avatarUrl} />
-                )}
+                <Skeleton variant="circular" width={40} height={40} />
               </ListItemAvatar>
               {isLoading ? (
                 <div style={{ display: "flex", flexDirection: "column" }}>

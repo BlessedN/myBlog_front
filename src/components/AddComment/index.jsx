@@ -6,20 +6,30 @@ import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { fetchAddComment } from '../../redux/slices/posts';
+import { useDispatch, useSelector } from "react-redux";
 
-export const Index = () => {
+
+export const AddComment = ({postId}) => {
   const [comment, setComment] = useState("");
-  const [commentsList, setCommentsList] = useState([]);
+  const user = useSelector(state => state.auth.data)
+  const dispatch = useDispatch();
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
 
   const handleCommentSubmit = () => {
-    // добавление комментария в список
-    setCommentsList([...commentsList, comment]);
-    console.log(comment);
-    setComment("");
+    dispatch(fetchAddComment({
+      text: comment,
+      date: Date.now(),
+      post: postId,
+      user: {
+        fullName: user.fullName,
+        avatarUrl: user.avatarUrl,
+        id: user._id
+      }
+    }))
   };
 
   return (
@@ -42,10 +52,6 @@ export const Index = () => {
           <Button onClick={handleCommentSubmit} variant="contained">Отправить</Button>
           </div>
       </div>
-      {/* отрисовка списка комментариев */}
-      {commentsList.map((comment, index) => (
-        <div key={index}>{comment}</div>
-      ))}
     </>
   );
 };
