@@ -26,6 +26,7 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
+  comments,
 }) => {
   const dispatch = useDispatch();
   if (isLoading) {
