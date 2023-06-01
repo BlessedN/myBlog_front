@@ -66,7 +66,7 @@ export const AddPost = () => {
 
     } catch (err) {
       console.warn(err);
-      alert('Ошибка при создании статьи!')
+      alert('Ошибка при создании статьи, введите больше такста!')
     }
   };
 
