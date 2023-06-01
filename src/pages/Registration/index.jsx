@@ -31,13 +31,13 @@ export const Registration = () => {
     const data = await dispatch(fetchRegister(values));
 
     if (!data.payload){
-      return alert('Не удалось регистироваться');
+      return alert('Не удалось зарегистироваться');
     }
 
     if ('token' in data.payload){
       window.localStorage.setItem('token', data.payload.token)
     }else{
-      alert('Не удалось регистироваться!');
+      alert('Не удалось зарегистироваться!');
     }
   };
 
